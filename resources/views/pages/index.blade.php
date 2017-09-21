@@ -16,4 +16,6 @@
 	@endforeach
 </table>	
 
+{{ $pages->links() }}
+
 @endsection

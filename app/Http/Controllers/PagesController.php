@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Pages;
 use Illuminate\Http\Request;
+use App\Http\Requests\PagesRequest;
 
 class PagesController extends Controller
 {
@@ -20,7 +21,7 @@ class PagesController extends Controller
      */
     public function index()
     {
-        $pages = Pages::all();
+        $pages = Pages::paginate(10);
 
         return view('pages.index', compact('pages'));
     }
@@ -32,7 +33,7 @@ class PagesController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.create');
     }
 
     /**
@@ -41,9 +42,10 @@ class PagesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PagesRequest $request)
     {
-        //
+        Pages::create($request->all());
+        return redirect('pages.index');
     }
 
     /**

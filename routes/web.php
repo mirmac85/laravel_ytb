@@ -15,7 +15,25 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('pages', 'PagesController');
+
+
+
+Route::group([
+	'middleware' => 'roles',
+	'roles' => ['Moderator', 'Admin']
+], function() {	
+	Route::get('/pages', 'PagesController@index');
+	Route::get('/pages/create', 'PagesController@create');
+	Route::post('/pages/store', 'PagesController@store');
+
+	Route::post('/pages/store', [
+		'uses' => 'PagesController@store',
+		'as' => 'pages.store'
+	]);
+});
+
+
+
 
 Auth::routes();
 
